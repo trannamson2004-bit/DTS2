@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thông tin điểm danh</title>
+<link rel="stylesheet" href="css/style.css">
+<style>
+  .dd-wrap{max-width:760px;margin:0 auto;padding:40px 20px 60px}
+  .dd-wrap h1{color:#ffd700;text-align:center;margin-bottom:6px;font-size:2rem}
+  .dd-wrap .sub{color:#aaa;text-align:center;margin-bottom:28px}
+  table.dd{width:100%;border-collapse:collapse;background:rgba(255,255,255,.06);border-radius:12px;overflow:hidden}
+  table.dd th,table.dd td{padding:13px 16px;text-align:left;border-bottom:1px solid rgba(255,255,255,.1);vertical-align:top}
+  table.dd th{width:38%;color:#ffd700;font-weight:600;background:rgba(255,215,0,.07)}
+  table.dd tr:last-child th,table.dd tr:last-child td{border-bottom:none}
+  table.dd td{color:#eee;word-break:break-word}
+  table.dd a{color:#87ceeb}
+  @media(max-width:560px){table.dd th{width:auto;display:block;border-bottom:none}table.dd td{display:block}}
+</style>
+</head>
+<body>
+<nav class="site-nav"><span class="brand">☰ Menu</span><a href="menu.html">Trang chủ</a><a href="lythuyet.html">Lý thuyết</a><a href="baitap22.html">Bài tập 22</a><a href="baitap23.html">Bài tập 23</a><a href="diemdanh.html">Thông tin điểm danh</a></nav>
+<div class="mssv-badge">MSSV: 221A010397</div>
+
+<div class="dd-wrap">
+  <img src="images/avatar.jpg" alt="Ảnh đại diện" class="avatar dd-avatar">
+  <h1>THÔNG TIN ĐIỂM DANH</h1>
+  <p class="sub">Đề thi kết thúc học phần &mdash; Đề số 1</p>
+  <table class="dd">
+    <tr><th>1. Họ và tên</th><td>Trần Nam Sơn</td></tr>
+    <tr><th>2. Mã số SV</th><td>221A010397</td></tr>
+    <tr><th>3. Lớp</th><td>INT440701</td></tr>
+    <tr><th>4. Ngày sinh</th><td>25/02/2004</td></tr>
+    <tr><th>5. Quê quán</th><td>Đà Nẵng</td></tr>
+    <tr><th>6. Địa chỉ cư trú</th><td>2737/47 Phạm Thế Hiển, Phường Bình Đông, TPHCM</td></tr>
+    <tr><th>7. Số điện thoại</th><td>0902697013</td></tr>
+    <tr><th>8. Email</th><td><a href="mailto:Trannamson2004@gmail.com">Trannamson2004@gmail.com</a></td></tr>
+    <tr><th>9. URL (link deploy bài thi)</th><td><a id="deploy-url" href="#"></a></td></tr>
+    <tr><th>10. Sở thích cá nhân</th><td>Xem phim, đọc báo, xem tin tức, ăn uống, vui chơi giải trí.</td></tr>
+  </table>
+</div>
+<script>
+  // Tự điền link deploy = địa chỉ trang web đang chạy (Netlify)
+  (function(){
+    var a=document.getElementById('deploy-url');
+    var url=location.href.replace(/diemdanh\.html.*$/,'');
+    a.textContent=url; a.href=url;
+  })();
+</script>
+<script src="js/script.js"></script>
+</body>
+</html>

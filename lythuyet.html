@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Phần 1: Lý thuyết — Trả lời câu hỏi Web Development</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#faf9f4;
+    --card:#ffffff;
+    --text:#0f172a;
+    --muted:#64748b;
+    --accent:#297a2e;
+    --accent-soft:rgba(41,122,46,.14);
+    --accent2:#d97706;
+    --accent2-soft:rgba(217,119,6,.14);
+    --border:rgba(15,23,42,.08);
+    --code-bg:#f1f5f9;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Source Sans 3',system-ui,sans-serif;
+    line-height:1.75;
+    font-size:17px;
+  }
+  .wrap{max-width:48rem;margin:0 auto;padding:3rem 1.25rem 4rem}
+
+  /* ---------- Title block ---------- */
+  header.title-block{
+    border-bottom:3px solid var(--accent);
+    padding-bottom:1.75rem;
+    margin-bottom:2rem;
+  }
+  .eyebrow{
+    display:inline-block;
+    font-family:'Fredoka',sans-serif;
+    font-weight:600;
+    font-size:.8rem;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+    color:var(--accent);
+    background:var(--accent-soft);
+    padding:.3rem .8rem;
+    border-radius:999px;
+    margin-bottom:1rem;
+  }
+  h1{
+    font-family:'Fredoka',sans-serif;
+    font-weight:700;
+    font-size:2.1rem;
+    line-height:1.25;
+    color:var(--text);
+    margin-bottom:.75rem;
+  }
+  .subtitle{color:var(--muted);font-size:1.05rem}
+  .meta{
+    margin-top:1rem;display:flex;flex-wrap:wrap;gap:1rem;
+    font-size:.9rem;color:var(--muted);
+  }
+  .meta span{display:inline-flex;align-items:center;gap:.4rem}
+  .meta svg{width:16px;height:16px;stroke:var(--accent)}
+
+  /* ---------- TOC ---------- */
+  nav.toc{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:1.25rem 1.5rem;
+    margin-bottom:2.5rem;
+    box-shadow:0 1px 3px rgba(0,0,0,.04);
+  }
+  nav.toc h2{
+    font-family:'Fredoka',sans-serif;
+    font-size:1.05rem;font-weight:600;
+    color:var(--accent);margin-bottom:.75rem;
+    display:flex;align-items:center;gap:.5rem;
+  }
+  nav.toc h2 svg{width:18px;height:18px;stroke:var(--accent)}
+  nav.toc ol{list-style:none;counter-reset:toc}
+  nav.toc li{
+    counter-increment:toc;
+    padding:.4rem 0;
+    border-bottom:1px dashed var(--border);
+  }
+  nav.toc li:last-child{border-bottom:none}
+  nav.toc a{
+    color:var(--text);text-decoration:none;
+    display:flex;align-items:baseline;gap:.6rem;
+    transition:color .2s;
+  }
+  nav.toc a::before{
+    content:counter(toc,decimal-leading-zero);
+    font-family:'Fredoka',sans-serif;
+    font-weight:600;color:var(--accent2);font-size:.9rem;
+    min-width:2rem;
+  }
+  nav.toc a:hover{color:var(--accent)}
+
+  /* ---------- Sections ---------- */
+  section.qa{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:2rem 1.75rem;
+    margin-bottom:2.25rem;
+    box-shadow:0 1px 3px rgba(0,0,0,.04);
+    scroll-margin-top:1.5rem;
+  }
+  .q-head{
+    display:flex;gap:.9rem;align-items:flex-start;
+    margin-bottom:1.25rem;padding-bottom:1rem;
+    border-bottom:2px solid var(--accent-soft);
+  }
+  .q-num{
+    flex:0 0 auto;
+    width:44px;height:44px;border-radius:12px;
+    background:var(--accent);color:#fff;
+    font-family:'Fredoka',sans-serif;font-weight:700;font-size:1.2rem;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .q-text{
+    font-family:'Fredoka',sans-serif;
+    font-weight:600;font-size:1.15rem;line-height:1.4;
+    padding-top:.35rem;
+  }
+  h3.sub{
+    font-family:'Fredoka',sans-serif;
+    font-weight:600;font-size:1.05rem;
+    color:var(--accent);
+    margin:1.5rem 0 .6rem;
+    display:flex;align-items:center;gap:.5rem;
+  }
+  h3.sub svg{width:18px;height:18px;stroke:var(--accent);flex:0 0 auto}
+  p{margin-bottom:.85rem;text-align:justify}
+  ul,ol{margin:.5rem 0 1rem 1.5rem}
+  li{margin-bottom:.45rem}
+  strong{color:var(--text);font-weight:600}
+  code{
+    font-family:Consolas,'Courier New',monospace;
+    background:var(--code-bg);
+    padding:.1rem .4rem;border-radius:4px;
+    font-size:.92em;color:#b45309;
+  }
+  pre{
+    background:#0f172a;color:#e2e8f0;
+    padding:1.1rem 1.25rem;border-radius:10px;
+    overflow-x:auto;margin:1rem 0 1.25rem;
+    font-family:Consolas,'Courier New',monospace;
+    font-size:.88rem;line-height:1.6;
+    border-left:4px solid var(--accent);
+  }
+  pre code{background:transparent;color:inherit;padding:0}
+  .cm{color:#94a3b8;font-style:italic}
+  .kw{color:#7dd3fc}
+  .str{color:#fcd34d}
+
+  /* ---------- Callout boxes ---------- */
+  .callout{
+    border-radius:10px;padding:1rem 1.25rem;margin:1.1rem 0;
+    border-left:4px solid var(--accent2);
+    background:var(--accent2-soft);
+  }
+  .callout.good{border-left-color:var(--accent);background:var(--accent-soft)}
+  .callout .ctitle{
+    font-family:'Fredoka',sans-serif;font-weight:600;
+    display:flex;align-items:center;gap:.5rem;margin-bottom:.4rem;
+  }
+  .callout .ctitle svg{width:18px;height:18px;stroke:var(--accent2);flex:0 0 auto}
+  .callout.good .ctitle svg{stroke:var(--accent)}
+
+  /* ---------- Comparison table ---------- */
+  table.cmp{
+    width:100%;border-collapse:collapse;margin:1rem 0 1.25rem;
+    font-size:.95rem;
+  }
+  table.cmp th,table.cmp td{
+    border:1px solid var(--border);
+    padding:.65rem .8rem;text-align:left;vertical-align:top;
+  }
+  table.cmp thead th{
+    background:var(--accent-soft);
+    font-family:'Fredoka',sans-serif;font-weight:600;
+    color:var(--accent);
+  }
+  table.cmp tbody tr:nth-child(even){background:#fafaf7}
+
+  /* ---------- Steps ---------- */
+  ol.steps{list-style:none;counter-reset:step;margin-left:0}
+  ol.steps li{
+    counter-increment:step;
+    position:relative;padding-left:2.6rem;margin-bottom:.7rem;
+  }
+  ol.steps li::before{
+    content:counter(step);
+    position:absolute;left:0;top:.15rem;
+    width:1.7rem;height:1.7rem;border-radius:50%;
+    background:var(--accent);color:#fff;
+    font-family:'Fredoka',sans-serif;font-weight:600;font-size:.9rem;
+    display:flex;align-items:center;justify-content:center;
+  }
+
+  footer{
+    text-align:center;color:var(--muted);font-size:.88rem;
+    padding-top:1.5rem;border-top:1px solid var(--border);
+    margin-top:1rem;
+  }
+  @media (max-width:600px){
+    h1{font-size:1.6rem}
+    section.qa{padding:1.4rem 1.1rem}
+    body{font-size:16px}
+  }
+  @media print{
+    body{background:#fff}
+    section.qa{box-shadow:none;break-inside:avoid}
+    nav.toc{break-after:page}
+  }
+</style>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<nav class="site-nav"><span class="brand">☰ Menu</span><a href="menu.html">Trang chủ</a><a href="lythuyet.html">Lý thuyết</a><a href="baitap22.html">Bài tập 22</a><a href="baitap23.html">Bài tập 23</a><a href="diemdanh.html">Thông tin điểm danh</a></nav>
+
+<div class="wrap">
+
+  <!-- ===== Title block ===== -->
+  <header class="title-block">
+    <span class="eyebrow">Tài liệu học tập · Môn Lập trình Web</span>
+    <h1>Phần 1: Lý thuyết — Trả lời chi tiết 4 câu hỏi</h1>
+    <p class="subtitle">CSS Positioning · Domain &amp; Hosting · JavaScript Scope &amp; Hoisting · Event Delegation</p>
+    <div class="meta">
+      <span>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        Tổng điểm: 40
+      </span>
+      <span>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+        4 câu hỏi · 10 điểm mỗi câu
+      </span>
+    </div>
+  </header>
+
+  <!-- ===== Table of contents ===== -->
+  <nav class="toc">
+    <h2>
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+      Mục lục
+    </h2>
+    <ol>
+      <li><a href="#cau1">Sự khác biệt giữa <code>position: absolute</code> và <code>position: relative</code></a></li>
+      <li><a href="#cau2">Quy trình đăng ký domain, cấu hình hosting &amp; vai trò DNS</a></li>
+      <li><a href="#cau3">So sánh <code>let</code>, <code>const</code>, <code>var</code> về scope &amp; hoisting</a></li>
+      <li><a href="#cau4">Event Delegation trong JavaScript &amp; danh sách động</a></li>
+    </ol>
+  </nav>
+
+  <!-- ===== Câu 1 ===== -->
+  <section class="qa" id="cau1">
+    <div class="q-head">
+      <div class="q-num">1</div>
+      <div class="q-text">Giải thích sự khác biệt giữa <code>position: absolute</code> và <code>position: relative</code> trong CSS. Đưa ví dụ tình huống sử dụng từng loại để tạo layout responsive, và thảo luận về cách chúng ảnh hưởng đến việc deploy website lên hosting (tương thích với các thiết bị khác nhau).</div>
+    </div>
+
+    <h3 class="sub">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+      1.1. Khái niệm và sự khác biệt cốt lõi
+    </h3>
+    <p><strong><code>position: relative</code></strong> định vị phần tử <em>so với chính vị trí ban đầu</em> của nó trong luồng tài liệu (normal flow). Phần tử vẫn chiếm giữ không gian gốc, các phần tử xung quanh không bị dịch chuyển. Thuộc tính <code>top/right/bottom/left</code> sẽ dịch chuyển phần tử lệch đi so với chỗ đứng cũ.</p>
+    <p><strong><code>position: absolute</code></strong> lấy phần tử <em>ra khỏi luồng tài liệu</em> — nó không còn chiếm không gian, các phần tử khác sẽ lấp đầy chỗ trống. Vị trí của nó được tính <em>so với phần tử tổ tiên gần nhất có <code>position</code> khác <code>static</code></em>; nếu không có tổ tiên nào như vậy, nó sẽ định vị so với khung nhìn (viewport) hay phần tử <code>&lt;html&gt;</code>.</p>
+
+    <table class="cmp">
+      <thead>
+        <tr><th>Tiêu chí</th><th><code>position: relative</code></th><th><code>position: absolute</code></th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Vị trí trong luồng tài liệu</td><td>Vẫn giữ chỗ, không ảnh hưởng phần tử khác</td><td>Bị loại ra, các phần tử khác lấp đầy khoảng trống</td></tr>
+        <tr><td>Điểm tham chiếu</td><td>Chính vị trí gốc của nó</td><td>Tổ tiên gần nhất có position ≠ static</td></tr>
+        <tr><td>Cách dùng phổ biến</td><td>Làm "khung neo" (anchor) cho các phần tử con absolute</td><td>Đặt các yếu tố nổi (badge, nút đóng, tooltip) trong khung cha</td></tr>
+        <tr><td>Rủi ro responsive</td><td>Thấp — bố cục vẫn co giãn theo luồng</td><td>Cao — dễ trôi lệch nếu sai tổ tiên tham chiếu</td></tr>
+      </tbody>
+    </table>
+
+    <h3 class="sub">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+      1.2. Ví dụ ứng dụng vào layout responsive
+    </h3>
+    <p><strong>Mẫu kết hợp chuẩn:</strong> dùng <code>relative</code> cho khung chứa (cha) và <code>absolute</code> cho các yếu tố con bên trong. Khi khung cha co giãn theo màn hình, các yếu tố con luôn bám đúng vị trí tương đối.</p>
+<pre><code><span class="cm">/* Khung cha — tạo gốc tham chiếu */</span>
+<span class="kw">.banner</span> {
+  <span class="kw">position</span>: relative;
+  <span class="kw">width</span>: 100%;
+  <span class="kw">max-width</span>: 1200px;
+  <span class="kw">margin</span>: 0 auto;
+}
+<span class="cm">/* Tiêu đề con — luôn căn giữa khung cha */</span>
+<span class="kw">.banner h2</span> {
+  <span class="kw">position</span>: absolute;
+  <span class="kw">top</span>: 50%; <span class="kw">left</span>: 50%;
+  <span class="kw">transform</span>: translate(-50%, -50%);
+  <span class="kw">color</span>: white;
+}
+<span class="cm">/* Nhãn khuyến mãi — góc trên phải của thẻ sản phẩm */</span>
+<span class="kw">.product-card</span> { <span class="kw">position</span>: relative; <span class="kw">width</span>: 30%; <span class="kw">min-width</span>: 280px; }
+<span class="kw">.badge-sale</span> {
+  <span class="kw">position</span>: absolute;
+  <span class="kw">top</span>: 10px; <span class="kw">right</span>: 10px;
+  <span class="kw">background</span>: #d97706; <span class="kw">color</span>: #fff;
+  <span class="kw">padding</span>: 4px 10px; <span class="kw">border-radius</span>: 6px;
+}</code></pre>
+
+    <div class="callout good">
+      <div class="ctitle">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        Lời khuyên khi làm responsive
+      </div>
+      Luôn dùng đơn vị tương đối (<code>%</code>, <code>em</code>, <code>rem</code>, <code>vw/vh</code>) thay vì <code>px</code> cứng cho các phần tử absolute, và kết hợp với <code>@media</code> query. Kiểm tra trên nhiều kích thước màn hình bằng DevTools (chế độ Device Toolbar) trước khi đưa lên hosting.
+    </div>
+
+    <h3 class="sub">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      1.3. Ảnh hưởng khi deploy lên hosting &amp; tương thích thiết bị
+    </h3>
+    <ul>
+      <li><strong>Sai tổ tiên tham chiếu:</strong> quên đặt <code>position: relative</code> cho khung cha khiến phần tử <code>absolute</code> trôi ra góc trang — lỗi này chỉ lộ ra khi xem trên màn hình khác kích thước (điện thoại, tablet).</li>
+      <li><strong>Chồng chéo (z-index):</strong> các phần tử absolute nằm ngoài luồng nên dễ đè lên nội dung khác; cần quản lý <code>z-index</code> rõ ràng và kiểm tra trên trình duyệt thật (Chrome, Firefox, Safari, Edge) sau khi upload.</li>
+      <li><strong>Khác biệt giữa trình duyệt:</strong> một số phiên bản cũ tính toán tọa độ khác nhau; nên chuẩn hóa bằng CSS reset và kiểm tra đa nền tảng trước khi công bố website.</li>
+    </ul>
+  </section>
+
+  <!-- ===== Câu 2 ===== -->
+  <section class="qa" id="cau2">
+    <div class="q-head">
+      <div class="q-num">2</div>
+      <div class="q-text">Mô tả quy trình đăng ký domain và cấu hình hosting cho một website đơn giản sử dụng JavaScript. Giải thích vai trò của DNS trong quá trình này, và đề xuất ít nhất 2 công cụ hỗ trợ (như GitHub Pages hoặc Netlify) để deploy code mà không cần server riêng. Thảo luận rủi ro bảo mật nếu không cấu hình đúng.</div>
+    </div>
+
+    <h3 class="sub">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+      2.1. Quy trình đăng ký domain &amp; cấu hình hosting
+    </h3>
+    <ol class="steps">
+      <li><strong>Đăng ký tên miền (domain):</strong> chọn nhà cung cấp (Namecheap, GoDaddy, Viettel, FPT…), tra cứu tên còn trống, thanh toán và hoàn tất hồ sơ chủ sở hữu miền.</li>
+      <li><strong>Chọn gói hosting:</strong> với website tĩnh HTML/CSS/JS, có thể dùng hosting chia sẻ hoặc các nền tảng tĩnh miễn phí; nhận thông tin máy chủ (FTP, nameserver).</li>
+      <li><strong>Trỏ domain về hosting:</strong> tại trang quản lý domain, điền địa chỉ Nameserver (hoặc bản ghi A/CNAME) do nhà cung cấp hosting cấp.</li>
+      <li><strong>Upload code:</strong> dùng FTP (FileZilla), File Manager của hosting, hoặc Git để đẩy các tệp <code>.html</code>, <code>.css</code>, <code>.js</code> vào thư mục gốc (thường là <code>public_html</code>).</li>
+      <li><strong>Kiểm tra &amp; bật HTTPS:</strong> chờ DNS lan tỏa (vài phút đến 48 giờ), cài chứng chỉ SSL (Let's Encrypt miễn phí) để truy cập an toàn.</li>
+    </ol>
+
+    <h3 class="sub">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+      2.2. Vai trò của DNS
+    </h3>
+    <p>DNS (Domain Name System — Hệ thống tên miền) hoạt động như một <strong>"cuốn sổ điện thoại"</strong> của Internet: nó chuyển đổi tên miền dễ nhớ (ví dụ <code>mywebsite.vn</code>) thành địa chỉ IP số học của máy chủ (ví dụ <code>104.21.x.x</code>). Nhờ DNS, trình duyệt biết phải kết nối đến máy chủ nào để tải về nội dung website. Các bản ghi quan trọng: <code>A</code> (IPv4), <code>AAAA</code> (IPv6), <code>CNAME</code> (bí danh), <code>MX</code> (thư), <code>NS</code> (nameserver).</p>
+
+    <h3 class="sub">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+      2.3. Hai công cụ deploy không cần server riêng
+    </h3>
+    <ul>
+      <li><strong>GitHub Pages:</strong> đẩy code lên kho GitHub (công khai hoặc riêng tư với tài khoản Pro), vào <em>Settings → Pages</em> chọn nhánh và thư mục; website được phục vụ tại <code>tentaikhoan.github.io/tenkho</code>, miễn phí và có sẵn HTTPS. Phù hợp trang tĩnh, tài liệu, blog cá nhân.</li>
+      <li><strong>Netlify:</strong> kết nối kho Git hoặc kéo-thả (drag &amp; drop) thư mục dự án trực tiếp; tự động build &amp; deploy mỗi khi có commit mới, cấp SSL miễn phí, hỗ trợ tên miền tùy chỉnh và forms. Tích hợp tốt với các framework JavaScript hiện đại.</li>
+    </ul>
+    <p>Công cụ khác có thể tham khảo: Vercel, Cloudflare Pages, Surge.sh.</p>
+
+    <div class="callout">
+      <div class="ctitle">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        Rủi ro bảo mật khi cấu hình sai
+      </div>
+      <ul style="margin-bottom:0">
+        <li><strong>Không bật HTTPS/SSL:</strong> dữ liệu truyền đi không mã hóa, dễ bị nghe lén và sửa đổi (MITM); trình duyệt cảnh báo "Không an toàn", làm mất uy tín.</li>
+        <li><strong>Sai bản ghi DNS:</strong> domain có thể trỏ nhầm sang trang giả mạo (phishing), hoặc để lộ thông tin hạ tầng nội bộ qua bản ghi không cần thiết.</li>
+        <li><strong>Phân quyền thư mục sai:</strong> người ngoài có thể duyệt, đọc hoặc sửa tệp trên server; tệp nhạy cảm (<code>.env</code>, khóa bí mật) có thể bị lộ.</li>
+        <li><strong>Domain hết hạn:</strong> mất quyền kiểm soát, kẻ xấu có thể đăng ký lại và mạo danh website để lừa đảo người dùng.</li>
+        <li><strong>Upload nhầm thông tin đăng nhập:</strong> đẩy lên Git cả tệp chứa khóa API, mật khẩu — nên dùng <code>.gitignore</code> và biến môi trường.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ===== Câu 3 ===== -->
+  <section class="qa" id="cau3">
+    <div class="q-head">
+      <div class="q-num">3</div>
+      <div class="q-text">Trong JavaScript, so sánh <code>let</code>, <code>const</code> và <code>var</code> về scope và hoisting. Đưa ví dụ code minh họa một tình huống lỗi thường gặp khi sử dụng sai, và giải thích cách debug bằng công cụ hỗ trợ như Chrome DevTools.</div>
+    </div>
+
+    <h3 class="sub">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+      3.1. So sánh về Scope (phạm vi)
+    </h3>
+    <table class="cmp">
+      <thead>
+        <tr><th>Khái niệm</th><th><code>var</code></th><th><code>let</code></th><th><code>const</code></th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Phạm vi</td><td>Function scope (hoặc global)</td><td>Block scope <code>{}</code></td><td>Block scope <code>{}</code></td></tr>
+        <tr><td>Gán lại giá trị</td><td>Được</td><td>Được</td><td><strong>Không</strong> được (hằng số)</td></tr>
+        <tr><td>Khai báo lại</td><td>Được (dễ gây lỗi)</td><td>Không</td><td>Không</td></tr>
+        <tr><td>Thuộc window (global)</td><td>Có</td><td>Không</td><td>Không</td></tr>
+      </tbody>
+    </table>
+
+    <h3 class="sub">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+      3.2. So sánh về Hoisting (nâng biến)
+    </h3>
+    <p>Cả ba đều được JavaScript "nâng" lên đầu phạm vi trước khi thực thi, nhưng khác nhau ở trạng thái khởi tạo:</p>
+    <ul>
+      <li><code>var</code>: được khởi tạo sẵn với giá trị <code>undefined</code> → gọi trước khi khai báo <em>không báo lỗi</em> nhưng trả về <code>undefined</code>.</li>
+      <li><code>let</code> / <code>const</code>: được nâng nhưng <em>chưa được khởi tạo</em> — nằm trong "vùng chết tạm thời" (Temporal Dead Zone) → truy cập trước dòng khai báo sẽ ném lỗi <code>ReferenceError</code>.</li>
+    </ul>
+
+    <h3 class="sub">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+      3.3. Ví dụ lỗi thường gặp &amp; cách sửa
+    </h3>
+    <p>Lỗi kinh điển: dùng <code>var</code> trong vòng lặp kết hợp với hàm bất đồng bộ — tất cả các lần gọi đều dùng chung một biến <code>i</code> đã tăng đến giá trị cuối.</p>
+<pre><code><span class="cm">// ❌ SAI — dùng var</span>
+<span class="kw">for</span> (<span class="kw">var</span> i = 1; i &lt;= 3; i++) {
+  setTimeout(<span class="kw">function</span>() {
+    console.log(<span class="str">"Lần:"</span>, i);
+  }, 100);
+}
+<span class="cm">// Kết quả: in ra 3 lần "Lần: 4" (không phải 1, 2, 3)</span>
+
+<span class="cm">// ✅ ĐÚNG — thay var bằng let (mỗi vòng lặp có i riêng)</span>
+<span class="kw">for</span> (<span class="kw">let</span> i = 1; i &lt;= 3; i++) {
+  setTimeout(<span class="kw">function</span>() {
+    console.log(<span class="str">"Lần:"</span>, i);
+  }, 100);
+}
+<span class="cm">// Kết quả: 1 → 2 → 3 như mong đợi</span>
+
+<span class="cm">// ✅ const dành cho giá trị không đổi</span>
+<span class="kw">const</span> PI = 3.14;
+<span class="cm">// PI = 3.1415;  → TypeError: Assignment to constant variable</span></code></pre>
+
+    <h3 class="sub">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 21l-4.35-4.35"/><circle cx="11" cy="11" r="8"/></svg>
+      3.4. Cách debug bằng Chrome DevTools
+    </h3>
+    <ol class="steps">
+      <li>Nhấn <code>F12</code> (hoặc <code>Ctrl+Shift+I</code>) → chọn tab <strong>Sources</strong>, mở tệp <code>.js</code> cần kiểm tra.</li>
+      <li>Nhấp vào số dòng để đặt <strong>breakpoint</strong> (dấu chấm xanh) ngay trước đoạn code nghi vấn.</li>
+      <li>Tải lại trang — thực thi tạm dừng; ở bảng <strong>Scope</strong> bên phải xem giá trị từng biến (Local, Closure, Global).</li>
+      <li>Dùng các nút <em>Step over / Step into / Step out</em> để chạy từng dòng, theo dõi biến có bị <code>undefined</code> hay bị ghi đè do dùng sai <code>var</code>.</li>
+      <li>Tab <strong>Console</strong> gõ trực tiếp tên biến để kiểm tra giá trị tại thời điểm dừng; tab <strong>Network</strong> kiểm tra tệp JS có tải về thành công không.</li>
+    </ol>
+  </section>
+
+  <!-- ===== Câu 4 ===== -->
+  <section class="qa" id="cau4">
+    <div class="q-head">
+      <div class="q-num">4</div>
+      <div class="q-text">Giải thích khái niệm Event Delegation trong JavaScript. Đưa ví dụ ứng dụng trong việc xử lý sự kiện trên danh sách động (dynamic list), và thảo luận lợi ích khi tích hợp với HTML/CSS để tối ưu hiệu suất website.</div>
+    </div>
+
+    <h3 class="sub">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      4.1. Khái niệm Event Delegation (Ủy thác sự kiện)
+    </h3>
+    <p>Event Delegation là kỹ thuật <strong>không gắn trình lắng nghe (event listener) cho từng phần tử con</strong>, mà chỉ gắn <em>một lần duy nhất</em> cho phần tử tổ tiên chung (cha/ông). Khi sự kiện xảy ra trên một phần tử con, nó sẽ <em>lan ngược (event bubbling)</em> lên tổ tiên; tổ tiên bắt sự kiện, kiểm tra <code>event.target</code> để xác định phần tử gốc rồi xử lý thay.</p>
+
+    <h3 class="sub">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+      4.2. Ví dụ: danh sách động thêm/xóa phần tử
+    </h3>
+<pre><code><span class="cm">&lt;!-- HTML --&gt;</span>
+&lt;ul id=<span class="str">"danhSach"</span>&gt;
+  &lt;li&gt;Mục 1&lt;/li&gt;
+  &lt;li&gt;Mục 2&lt;/li&gt;
+&lt;/ul&gt;
+&lt;button id=<span class="str">"nutThem"</span>&gt;Thêm mục mới&lt;/button&gt;
+
+&lt;script&gt;
+<span class="kw">const</span> danhSach = document.getElementById(<span class="str">'danhSach'</span>);
+
+<span class="cm">// Chỉ gắn MỘT listener cho cả danh sách (cha)</span>
+danhSach.addEventListener(<span class="str">'click'</span>, <span class="kw">function</span>(e) {
+  <span class="cm">// Kiểm tra đối tượng được nhấp có phải &lt;li&gt; không</span>
+  <span class="kw">if</span> (e.target.tagName === <span class="str">'LI'</span>) {
+    e.target.classList.toggle(<span class="str">'da-chon'</span>);
+    console.log(<span class="str">'Đã chọn:'</span>, e.target.textContent);
+  }
+});
+
+<span class="cm">// Thêm mục mới SAU KHI chạy — vẫn hoạt động mà không cần gắn lại listener</span>
+document.getElementById(<span class="str">'nutThem'</span>).addEventListener(<span class="str">'click'</span>, <span class="kw">function</span>() {
+  <span class="kw">const</span> liMoi = document.createElement(<span class="str">'li'</span>);
+  liMoi.textContent = <span class="str">'Mục mới - '</span> + (danhSach.children.length + 1);
+  danhSach.appendChild(liMoi);
+});
+&lt;/script&gt;</code></pre>
+
+    <h3 class="sub">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+      4.3. Lợi ích &amp; tối ưu hiệu suất khi tích hợp HTML/CSS
+    </h3>
+    <ul>
+      <li><strong>Tiết kiệm bộ nhớ:</strong> thay vì hàng trăm listener (mỗi phần tử một cái), chỉ có một listener duy nhất → trang nhẹ hơn, chạy mượt hơn, đặc biệt với danh sách dài.</li>
+      <li><strong>Tự động hỗ trợ phần tử động:</strong> các phần tử thêm/xóa sau khi trang tải vẫn được xử lý — không cần gắn/bỏ listener thủ công mỗi lần DOM thay đổi.</li>
+      <li><strong>Code gọn, dễ bảo trì:</strong> logic xử lý tập trung một chỗ, dễ sửa đổi và mở rộng.</li>
+      <li><strong>Tích hợp CSS:</strong> dùng <code>classList.toggle('da-chon')</code> để chuyển lớp thay vì chỉnh trực tiếp <code>style</code>; CSS quản lý giao diện (<code>.da-chon { color: #297a2e; font-weight: 600; }</code>) giúp nhất quán và dễ thay đổi chủ đề sau này.</li>
+      <li><strong>Tối ưu reflow/repaint:</strong> thay đổi lớp CSS thay đổi thuộc tính kiểu được gom nhóm, trình duyệt vẽ lại hiệu quả hơn so với sửa từng style trực tiếp qua JavaScript.</li>
+    </ul>
+
+    <div class="callout good">
+      <div class="ctitle">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        Kết luận
+      </div>
+      Event Delegation tận dụng cơ chế event bubbling sẵn có của trình duyệt, kết hợp với HTML (cấu trúc danh sách) và CSS (quản lý trạng thái qua lớp) tạo thành mô hình xử lý sự kiện hiệu quả, bền vững và dễ mở rộng — đặc biệt quan trọng với các ứng dụng web hiện đại có nội dung động.
+    </div>
+  </section>
+
+  <footer>
+    Tài liệu trả lời Phần 1: Lý thuyết (40 điểm) · Môn Lập trình Web · Hỗ trợ xem &amp; in trực tiếp từ trình duyệt
+  </footer>
+
+</div>
+<script src="js/script.js"></script>
+</body>
+</html>

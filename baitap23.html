@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đèn kéo quân - Bài tập 23</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<nav class="site-nav"><span class="brand">☰ Menu</span><a href="menu.html">Trang chủ</a><a href="lythuyet.html">Lý thuyết</a><a href="baitap22.html">Bài tập 22</a><a href="baitap23.html">Bài tập 23</a><a href="diemdanh.html">Thông tin điểm danh</a></nav>
+
+    <!-- ====== SỬA MÃ SINH VIÊN TẠI ĐÂY ====== -->
+    <div class="mssv-badge">MSSV: 221A010397</div>
+
+    <header class="den-header">
+        <h1>ĐÈN KÉO QUÂN</h1>
+        <p>Hiệu ứng Javascript - 6 ảnh quay vòng tròn 3D</p>
+        <a href="menu.html" class="back-link">&larr; Về trang chủ</a>
+    </header>
+
+    <!-- Khung cảnh 3D chứa đèn -->
+    <div class="scene">
+        <div class="carousel">
+            <!-- 6 mặt đèn - thay ảnh trong thư mục images/ bằng ảnh của bạn -->
+            <div class="face">
+                <img src="images/img1.jpg" alt="Ảnh 1">
+                <div class="caption">Ảnh 1</div>
+            </div>
+            <div class="face">
+                <img src="images/img2.jpg" alt="Ảnh 2">
+                <div class="caption">Ảnh 2</div>
+            </div>
+            <div class="face">
+                <img src="images/img3.jpg" alt="Ảnh 3">
+                <div class="caption">Ảnh 3</div>
+            </div>
+            <div class="face">
+                <img src="images/img4.jpg" alt="Ảnh 4">
+                <div class="caption">Ảnh 4</div>
+            </div>
+            <div class="face">
+                <img src="images/img5.jpg" alt="Ảnh 5">
+                <div class="caption">Ảnh 5</div>
+            </div>
+            <div class="face">
+                <img src="images/img6.jpg" alt="Ảnh 6">
+                <div class="caption">Ảnh 6</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Đế đèn (hiệu ứng ánh sáng) -->
+    <div class="lamp-base"></div>
+
+    <!-- Thanh điều khiển -->
+    <div class="controls">
+        <button id="btnSlower">Chậm lại</button>
+        <button id="btnToggle">Dừng lại</button>
+        <button id="btnFaster">Nhanh lên</button>
+        <button id="btnReverse">Chiều thuận</button>
+    </div>
+
+    <div class="status">Đang quay</div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
